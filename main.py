@@ -270,9 +270,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             s1.graphicalProperties.line.width = 30000
             s1.smooth = True  # Make the line smooth
 
-            # save file
+            # adding reological data
+            ws['E2'] = 'VA'
+            ws['F2'] = self.records[index]["VA"]
+            ws['G2'] = '[CP]'
+
+            ws['E3'] = 'VP'
+            ws['F3'] = self.records[index]["VP"]
+            ws['G3'] = '[CP]'
+
+            ws['E4'] = 'PC'
+            ws['F4'] = self.records[index]["PC"]
+            ws['G4'] = '[ADIM]'
+            # adding chat and saving file
             ws.add_chart(c1, 'B10')
             wb.save(f"{userPath}/report.xlsx")
+            # success message for user
+            QMessageBox.information(self, "Correcto", "Reporte guardado exitosamente")
+
         else:
             QMessageBox.information(self, "Error", "Todos los campos son obligatorios, revisa tu información")
 
