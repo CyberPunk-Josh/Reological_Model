@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'grafica1EByNYl.ui'
+## Form generated from reading UI file 'grafica1oFiAGS.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.1.3
 ##
@@ -612,7 +612,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(10, 10, 331, 501))
+        self.verticalLayoutWidget.setGeometry(QRect(10, 10, 331, 551))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -691,9 +691,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.GuardarButton)
 
+        self.reporte_Button = QPushButton(self.verticalLayoutWidget)
+        self.reporte_Button.setObjectName(u"reporte_Button")
+
+        self.verticalLayout.addWidget(self.reporte_Button)
+
         self.gridLayoutWidget = QWidget(self.centralwidget)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
-        self.gridLayoutWidget.setGeometry(QRect(10, 510, 321, 251))
+        self.gridLayoutWidget.setGeometry(QRect(20, 600, 321, 171))
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -1360,6 +1365,7 @@ class Ui_MainWindow(object):
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Gr\u00e0fico", None))
         self.clear_button.setText(QCoreApplication.translate("MainWindow", u"Limpiar", None))
         self.GuardarButton.setText(QCoreApplication.translate("MainWindow", u"Guardar", None))
+        self.reporte_Button.setText(QCoreApplication.translate("MainWindow", u"Reporte", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Viscosidad Aparente", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Punto de Cedencia", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Viscosidad Pl\u00e0stica", None))

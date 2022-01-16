@@ -600,7 +600,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       <x>10</x>
       <y>10</y>
       <width>331</width>
-      <height>501</height>
+      <height>551</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -748,15 +748,22 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="reporte_Button">
+       <property name="text">
+        <string>Reporte</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>510</y>
+      <x>20</x>
+      <y>600</y>
       <width>321</width>
-      <height>251</height>
+      <height>171</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">

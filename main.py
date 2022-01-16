@@ -1,10 +1,12 @@
-from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QMessageBox
+from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QMessageBox, QFileDialog
 from PySide6.QtSql import QSqlDatabase, QSqlTableModel
 from grafica1 import Ui_MainWindow
 from ui_subventana import Ui_Descripcion
 from datetime import datetime
 import pyqtgraph as pg
+import openpyxl
 import sys
+import os
 
 
 class Subventana(QWidget, Ui_Descripcion):
@@ -29,6 +31,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not db.open():
             print("Cannot connect to the database")
             sys.exit(True)
+
+        # Desktop user path
+        self.desktop = os.path.join(os.environ["HOMEPATH"], "Desktop")
 
         # creating the model
         self.model = QSqlTableModel()
@@ -62,6 +67,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.comboBox.currentTextChanged.connect(self.comboChanged)
         self.GuardarButton.clicked.connect(self.showWindow)
         self.subventana.aceptarButton.clicked.connect(self.saveValues)
+        self.reporte_Button.clicked.connect(self.genereateReport)
 
     def buildGraphics(self):
         self.widget.addLegend()
@@ -214,6 +220,61 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QMessageBox.information(self, "Error", "Todos los campos son obligatorios, revisa tu información")
             self.subventana.close()
             self.subventana.textEdit.setText("")
+
+    def genereateReport(self):
+        # get user desktop path
+        userPath = QFileDialog.getExistingDirectory(
+            parent=self,
+            caption='Selecciona una ubicacion',
+            dir=self.desktop
+        )
+        # create excel file
+        wb = openpyxl.Workbook()
+        ws = wb.active
+
+        # get values of the active index
+        index = self.comboBox.currentIndex()
+        if len(self.records[index]["tethaValues"]) > 0:
+            # structuring data
+            rows = [
+                ['y', 't'],
+                [self.records[index]["valuesX"][0], self.records[index]["valuesY"][0]],
+                [self.records[index]["valuesX"][1], self.records[index]["valuesY"][1]],
+                [self.records[index]["valuesX"][2], self.records[index]["valuesY"][2]],
+                [self.records[index]["valuesX"][3], self.records[index]["valuesY"][3]],
+                [self.records[index]["valuesX"][4], self.records[index]["valuesY"][4]],
+                [self.records[index]["valuesX"][5], self.records[index]["valuesY"][5]],
+            ]
+            # inserting data into excel file
+            for row in rows:
+                ws.append(row)
+
+            # creating chart
+            c1 = openpyxl.chart.ScatterChart()
+            c1.title = self.records[index]["name"] + '- ' + self.records[index]["Temperatura"]
+            c1.style = 2
+            c1.y_axis.title = 't'
+            c1.x_axis.title = 'y'
+
+            xValues = openpyxl.chart.Reference(ws, min_col=1, min_row=2, max_row=7)
+            yValues = openpyxl.chart.Reference(ws, min_col=2, min_row=2, max_row=7)
+
+            series = openpyxl.chart.Series(yValues, xValues, title='Modelo Reològico')
+
+            c1.append(series)
+
+            # style line
+            s1 = c1.series[0]
+            s1.marker = openpyxl.chart.marker.Marker('x')  # Add marker for intersection
+            s1.marker.graphicalProperties.solidFill = '000000'  # Color for marker
+            s1.graphicalProperties.line.width = 30000
+            s1.smooth = True  # Make the line smooth
+
+            # save file
+            ws.add_chart(c1, 'B10')
+            wb.save(f"{userPath}/report.xlsx")
+        else:
+            QMessageBox.information(self, "Error", "Todos los campos son obligatorios, revisa tu información")
 
 
 if __name__ == '__main__':
